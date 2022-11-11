@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<link rel="shortcut icon"  href="images/logo.jpg">
+	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat:400,700&display=swap&subset=cyrillic-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto|Yeon+Sung&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="application.css" >
+	<title>HD</title>
+</head>
+<body>
+<div class="intro">
+    <div class="container">
+	    <div class="intro__inner">
+		    <h2 class="intro__suptitle"><i>HD</i></h2>
+            <h1 class="intro__title">Ваша заявка</h1>
+		</div>
+
+<form class="form-signin" method="POST">
+
+  <?php
+    require('connect.php');
+    if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['variant']) && isset($_POST['duration'])) {
+      $name = trim(strip_tags($_POST['name']));
+      $email = trim(strip_tags($_POST['email']));
+      $phone = trim(strip_tags($_POST['phone']));
+      $variant = trim(strip_tags($_POST['variant']));
+      $duration = trim(strip_tags($_POST['duration']));
+
+      $query = "INSERT INTO applications (name, email, phone, variant, duration) VALUES ('$name', '$email', '$phone', '$variant', '$duration')";
+      $result = mysqli_query($connection, $query);
+
+      if($result) {
+        $smsg = "Заявка отправлена на рассмотрение";
+      } else {
+        $fsmsg = "Ошибка";
+      }
+    }
+    ?>
+   <section class="category">
+    <div class="vid">
+
+    <?php if(isset($smsg)){ ?><div class="alert alert-success" role="alert"> <?php echo $smsg; ?> </div><?php }?>
+    <?php if(isset($fsmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fsmsg; ?> </div><?php }?>
+
+    <div class="vid_text">Введите Ваши фамилию и имя:</div>
+    <input type = "text" name = "name" class="form-control" placeholder="Например, Шерунова Наталья" required><br><br>
+
+    <div class="vid_text">Введите Ваш email:</div>
+    <input type = "email" name = "email" class="form-control" placeholder="email@mail.ru" required><br><br>
+
+    <div class="vid_text">Введите Ваш номер телефона:</div>
+    <input type = "text" name = "phone" class="form-control" placeholder="+7-(9**)-***-**-**" required ><br><br>
+
+    <div class="vid_text">Выберите тип фотосессии:</div>
+    <input type = "text" name = "variant" class="form-control" placeholder="Индивидуальная" id="app-type" required><br><br>
+
+    <div class="vid_text">Выберите продолжительность фотосессии:</div>
+    <input type = "text" name = "duration" class="form-control" placeholder="Например, 1 час" id="app-duration" required><br><br> 
+    </div>
+    </div>
+	</div>
+	</div>
+    </section>
+    </form> 
+    <body>
+    </html>
